@@ -28,6 +28,24 @@
 			</list>
 		</property>
 	</bean>
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/auth"></mvc:mapping>
+			<bean class="jblog.security.LoginInterceptor"></bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/logout"></mvc:mapping>
+			<bean class="jblog.security.LogoutInterceptor"></bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"></mvc:mapping>
+			<mvc:exclude-mapping path="/user/auth"></mvc:exclude-mapping>
+			<mvc:exclude-mapping path="/user/logout"></mvc:exclude-mapping>
+			<mvc:exclude-mapping path="/assets/**"></mvc:exclude-mapping>
+			<bean class="jblog.security.AuthInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
 
 	<context:annotation-config />
 	<context:component-scan base-package="jblog.controller" />

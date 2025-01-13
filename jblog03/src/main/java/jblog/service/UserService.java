@@ -38,5 +38,9 @@ public class UserService {
 		categoryVo.setName("미분류/기타");
 		categoryRepository.insert(categoryVo);
 	}
+
+	public UserVo login(String id, String password) {
+		return userRepository.findByIdAndPassword(id, password);
+	}
 	
 }
