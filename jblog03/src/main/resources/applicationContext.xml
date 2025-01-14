@@ -11,6 +11,9 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
+	<!-- Transaction AOP Proxy -->
+	<tx:annotation-driven/>
+	
 	<!-- datasource -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="org.mariadb.jdbc.Driver" />
@@ -28,6 +31,11 @@
 	<!-- MyBatis SqlSessionTemplate --> 
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+	
+	<!-- Transaction Manager -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<constructor-arg index="0" ref="dataSource" />
 	</bean>
 			
 	<context:annotation-config />

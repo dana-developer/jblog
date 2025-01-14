@@ -29,6 +29,19 @@
 		</property>
 	</bean>
 	
+	<mvc:annotation-driven>
+		<!-- Argument Resolver -->
+		<mvc:argument-resolvers>
+			<bean
+				class="jblog.security.AuthUserHandlerMethodArgumentResolver"></bean>
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+
+	<!-- mvc url resource mapping -->
+	<mvc:resources mapping="/assets/upload-images/**"
+		location="file:/Users/dayeon/Desktop/mysite-uploads/">
+	</mvc:resources>
+	
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/user/auth"></mvc:mapping>

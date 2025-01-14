@@ -7,4 +7,30 @@
 			insert into blog (blog_id, title, profile) values (#{blogId}, #{title}, #{profile})
 		]]>
 	</insert>
+	
+	<select id="findById" parameterType = "String" resultType = "blogvo">
+		<![CDATA[
+			select blog_id as blogId, title, profile from blog where blog_id = #{id}
+		]]>
+	</select>
+	
+	<update id="update" parameterType = "blogvo">
+		<choose>
+			<when test='profile == ""'>
+				<![CDATA[
+					update blog set 
+							title = #{title}
+					where blog_id = #{blogId}
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					update blog set 
+							title = #{title}, 
+							profile = #{profile}
+					where blog_id = #{blogId}
+				]]>
+			</otherwise>
+		</choose>
+	</update>
 </mapper>

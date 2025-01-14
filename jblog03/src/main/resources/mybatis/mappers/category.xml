@@ -7,4 +7,35 @@
 			insert into category (name, description, blog_id) values (#{name}, #{description}, #{blogId})
 		]]>
 	</insert>
+	
+	<select id="findAllByBlogId" parameterType = "String" resultType = "categoryvo">
+		<![CDATA[
+			select id, name, description, blog_id as blogId from category where blog_id = #{blogId}
+		]]>
+	</select>
+	
+	<select id="findAllAndPostCntByBlogId" parameterType = "String" resultType = "categoryvo">
+		<![CDATA[
+			select A.id, A.name, A.description, A.blog_id as blogId, count(B.id) as postCnt
+			  from category A
+		 left join post B on A.id = B.category_id
+			 where A.blog_id = #{blogId}
+		  group by A.id
+		]]>
+	</select>
+	
+	<select id="findDefaultCategoryId" parameterType = "String" resultType = "Long">
+		<![CDATA[
+			select id
+			from category
+			where blog_id = #{blogId}
+			limit 1
+		]]>
+	</select>
+	
+	<delete id="delete" parameterType = "Long">
+		<![CDATA[
+			delete from category where id = #{categoryId}
+		]]>
+	</delete>
 </mapper>
