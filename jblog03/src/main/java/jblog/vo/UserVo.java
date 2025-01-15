@@ -1,9 +1,24 @@
 package jblog.vo;
 
+import org.hibernate.validator.constraints.Length;
+
+import jakarta.validation.constraints.NotEmpty;
+
 public class UserVo {
-	private String name;
+
+	@NotEmpty
+	@Length(min = 1, max = 50)
 	private String id;
+	
+	@NotEmpty
+	@Length(min = 1, max = 45)
+	private String name;
+
+	@NotEmpty
+	@Length(min = 1, max = 16)
 	private String password;
+	
+	@NotEmpty(message = "약관에 동의해야 합니다.")
 	private String agreeProv; // 약관 동의 여부
 
 	public String getName() {

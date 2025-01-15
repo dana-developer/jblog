@@ -20,8 +20,16 @@ pageContext.setAttribute("newLine", "\n");
 		<div id="wrapper">
 			<div id="content">
 				<div class="blog-content">
-					<h4>${post.title }</h4>
-					<p>${fn:replace(post.contents, newLine, "<br>")}
+					<c:choose>
+						<c:when test='${not empty post}'>
+							<h4>${post.title }</h4>
+							<p>${fn:replace(post.contents, newLine, "<br>")}
+						</c:when>
+						<c:otherwise>
+							<h4>아직 글이 없습니다.</h4>
+							<p>글을 작성해주세요.
+						</c:otherwise>
+					</c:choose>
 					<p>
 				</div>
 				<ul class="blog-list">

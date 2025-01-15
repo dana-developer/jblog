@@ -19,7 +19,7 @@
 		<form class="login-form"
 			action="${pageContext.request.contextPath}/user/auth">
 			<label>아이디</label> <input type="text" name="id" value="${id }">
-			<label>패스워드</label> <input type="text" name="password">
+			<label>패스워드</label> <input type="password" name="password">
 			<c:if test='${"fail" == result}'>
 				<p style="color:red">
 					로그인에 실패했습니다.

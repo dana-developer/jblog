@@ -34,11 +34,16 @@
 							<td>${category.postCnt }</td>
 							<td>${category.description }</td>
 							<td>
-								<c:if test="${status.index != 0 }">
-									<a href="${pageContext.request.contextPath }/${authUser.id }/admin/category/delete?categoryId=${category.id}">
-										<img src="${pageContext.request.contextPath}/assets/images/delete.jpg">
-									</a>
-								</c:if>
+								<c:choose>
+									<c:when test='${status.index != 0 }'>
+										<a href="${pageContext.request.contextPath }/${authUser.id }/admin/category/delete?categoryId=${category.id}">
+											<img src="${pageContext.request.contextPath}/assets/images/delete.jpg">
+										</a>
+									</c:when>
+									<c:otherwise>
+										<p>미분류/기타는 삭제안됨</p>
+									</c:otherwise>
+								</c:choose>
 							</td>
 						</tr>  
 					</c:forEach>			  

@@ -87,7 +87,8 @@ public class BlogController {
 	
 	@Auth
 	@PostMapping("/admin/category")
-	public String adminCategoryAdd(@PathVariable("id") String id, 
+	public String adminCategoryAdd(
+			@PathVariable("id") String id, 
 			@RequestParam("name") String name, 
 			@RequestParam("desc") String description) {
 		categoryService.insert(id, name, description);
