@@ -35,13 +35,16 @@
 							<td>${category.description }</td>
 							<td>
 								<c:choose>
+									<c:when test='${category.postCnt != 0 }'>
+										<p style="color:red">삭제불가</p>
+									</c:when>
 									<c:when test='${status.index != 0 }'>
 										<a href="${pageContext.request.contextPath }/${authUser.id }/admin/category/delete?categoryId=${category.id}">
 											<img src="${pageContext.request.contextPath}/assets/images/delete.jpg">
 										</a>
 									</c:when>
 									<c:otherwise>
-										<p>미분류/기타는 삭제안됨</p>
+										<p style="color:red">삭제불가</p>
 									</c:otherwise>
 								</c:choose>
 							</td>

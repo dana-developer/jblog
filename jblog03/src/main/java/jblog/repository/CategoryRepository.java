@@ -1,6 +1,7 @@
 package jblog.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -33,6 +34,10 @@ public class CategoryRepository {
 
 	public Long findDefaultCategoryId(String blogId) {
 		return sqlSession.selectOne("category.findDefaultCategoryId", blogId);
+	}
+
+	public CategoryVo findByIdAndBlogId(Long categoryId, String blogId) {
+		return sqlSession.selectOne("category.findByIdAndBlogId", Map.of("categoryId", categoryId, "blogId", blogId));
 	}
 
 }

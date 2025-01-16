@@ -46,4 +46,8 @@ public class CategoryService {
 	public Long getDefaultCategoryId(String id) {
 		return categoryRepository.findDefaultCategoryId(id);
 	}
+	
+	public CategoryVo getCategoryByIdAndBlogId(Long categoryId, String blogId) {
+		return categoryRepository.findByIdAndBlogId(categoryId, blogId);
+	}
 }

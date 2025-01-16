@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import jblog.repository.BlogRepository;
 import jblog.vo.BlogVo;
+import jblog.vo.PostVo;
 
 @Service
 public class BlogService {
@@ -30,9 +31,9 @@ public class BlogService {
 		blogRepository.update(blogVo);
 	}
 	
-	public Map<String, Object> getMainContents(String id, Optional<Long> path1, Optional<Long> path2) {
+	public Map<String, Object> getMainContents(String blogId, Optional<Long> path1, Optional<Long> path2) {
 		
-		Map<String, Object> result = new HashMap<>();;
+		Map<String, Object> result = new HashMap<>();
 		
 		Long categoryId = 0L;
 		Long postId = 0L;
@@ -42,22 +43,28 @@ public class BlogService {
 			postId = path2.get();
 		} else if(path1.isPresent()) {
 			categoryId = path1.get();
-		}
-		
-		if(categoryId == 0L) {
-			categoryId = categoryService.getDefaultCategoryId(id);
-		}
-		
-		if(postId == 0L) {
+			postId = postService.getRecentPostId(categoryId);
+		} else {
+			categoryId = categoryService.getDefaultCategoryId(blogId);
 			postId = postService.getRecentPostId(categoryId);
 		}
 		
-		result.put("blog", getBlog(id));
-		result.put("categoryList", categoryService.getCategories(id));
+		if(categoryService.getCategoryByIdAndBlogId(categoryId, blogId) == null) {
+			return null;
+		}
+		
+		PostVo postvo = postService.getPost(postId);
+		
+		if(postId != null && postvo == null) {
+			return null;
+		}
+		
+		result.put("blog", getBlog(blogId));
+		result.put("categoryList", categoryService.getCategories(blogId));
 		result.put("postList", postService.getPosts(categoryId));
 		result.put("currentCategoryId", categoryId);
 		result.put("currentPostId", postId);
-		result.put("post", postService.getPost(postId));
+		result.put("post", postvo);
 		
 		return result;
 	}

@@ -1,5 +1,6 @@
 package jblog.controller;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
@@ -40,7 +41,11 @@ public class BlogController {
 			@PathVariable("path1") Optional<Long> path1,
 			@PathVariable("path2") Optional<Long> path2,
 			 Model model) {
-		model.addAllAttributes(blogService.getMainContents(id, path1, path2));
+		Map<String, Object> result = blogService.getMainContents(id, path1, path2);
+		if(result == null) {
+			return "redirect:/main";
+		}
+		model.addAllAttributes(result);
 		return "blog/main";
 	}
 	

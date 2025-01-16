@@ -45,6 +45,18 @@ public class AuthInterceptor implements HandlerInterceptor {
 			response.sendRedirect(request.getContextPath() + "/user/login");
 			return false;
 		}
+		
+		String[] uri = request.getRequestURI().split("/");
+		
+		if(uri.length < 3) {
+			response.sendRedirect(request.getContextPath() + "/main");
+			return false;
+		}
+
+		if(!authUser.getId().equals(uri[2])) {			
+			response.sendRedirect(request.getContextPath() + "/main");
+			return false;
+		}
 
 		return true;
 	}

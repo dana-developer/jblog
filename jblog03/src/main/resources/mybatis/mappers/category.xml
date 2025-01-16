@@ -33,6 +33,14 @@
 		]]>
 	</select>
 	
+	<select id="findByIdAndBlogId" parameterType = "map" resultType = "categoryvo">
+		<![CDATA[
+			select id
+			from category
+			where blog_id = #{blogId} and id = #{categoryId}
+		]]>
+	</select>
+	
 	<delete id="delete" parameterType = "Long">
 		<![CDATA[
 			delete from category where id = #{categoryId}
