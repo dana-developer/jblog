@@ -1,6 +1,7 @@
 package jblog.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -37,8 +38,8 @@ public class PostRepository {
 	}
 
 
-	public PostVo findById(Long postId) {
-		return sqlSession.selectOne("post.findById", postId);
+	public PostVo findByCategoryIdAndId(Long categoryId, Long postId) {
+		return sqlSession.selectOne("post.findByCategoryIdAndId", Map.of("categoryId", categoryId, "postId", postId));
 	}
 
 }

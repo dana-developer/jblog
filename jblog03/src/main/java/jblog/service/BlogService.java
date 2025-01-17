@@ -35,28 +35,36 @@ public class BlogService {
 		
 		Map<String, Object> result = new HashMap<>();
 		
-		Long categoryId = 0L;
-		Long postId = 0L;
+//		Long categoryId = 0L;
+//		Long postId = 0L;
+//		
+//		if(path2.isPresent()) {	// categoryId와 postId를 모두 입력한 경우 (/jblog/hong/1/2)
+//			categoryId = path1.get();
+//			postId = path2.get();
+//		} else if(path1.isPresent()) { // categoryId만 입력한 경우 (/jblog/hong/1)
+//			categoryId = path1.get();
+//			postId = postService.getRecentPostId(categoryId);
+//		} else { // 모두 입력되지 않은 경우 (/jblog/hong)
+//			categoryId = categoryService.getDefaultCategoryId(blogId);
+//			postId = postService.getRecentPostId(categoryId);
+//		}
+//		
+		Long categoryId = path1.orElseGet(() -> categoryService.getDefaultCategoryId(blogId));
+	    Long postId = path2.orElseGet(() -> postService.getRecentPostId(categoryId));
 		
-		if(path2.isPresent()) {
-			categoryId = path1.get();
-			postId = path2.get();
-		} else if(path1.isPresent()) {
-			categoryId = path1.get();
-			postId = postService.getRecentPostId(categoryId);
-		} else {
-			categoryId = categoryService.getDefaultCategoryId(blogId);
-			postId = postService.getRecentPostId(categoryId);
-		}
-		
+		// 해당 카테고리가 blogId에 속하지 않는 경우
 		if(categoryService.getCategoryByIdAndBlogId(categoryId, blogId) == null) {
 			return null;
 		}
 		
-		PostVo postvo = postService.getPost(postId);
-		
-		if(postId != null && postvo == null) {
-			return null;
+		if(postId != null) {
+			PostVo postvo = postService.getPost(categoryId, postId);
+			
+			// 해당 포스트가 카테고리에 속하지 않은 경우
+			if(postvo == null) {
+				return null;
+			}
+			result.put("post", postvo);
 		}
 		
 		result.put("blog", getBlog(blogId));
@@ -64,7 +72,6 @@ public class BlogService {
 		result.put("postList", postService.getPosts(categoryId));
 		result.put("currentCategoryId", categoryId);
 		result.put("currentPostId", postId);
-		result.put("post", postvo);
 		
 		return result;
 	}

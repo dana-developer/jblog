@@ -33,8 +33,8 @@ public class PostService {
 		return postRepository.findRecentPostIdByCategoryId(categoryId);
 	}
 
-	public PostVo getPost(Long postId) {
-		return postRepository.findById(postId);
+	public PostVo getPost(Long categoryId, Long postId) {
+		return postRepository.findByCategoryIdAndId(categoryId, postId);
 	}
 
 }

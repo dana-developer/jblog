@@ -34,11 +34,11 @@
 		]]>
 	</select>
 	
-	<select id="findById" parameterType = "Long" resultType = "postvo">
+	<select id="findByCategoryIdAndId" parameterType = "map" resultType = "postvo">
 		<![CDATA[
 			select id, title, contents, reg_date as regDate, category_id as categoryId
 			from post
-			where id = #{postId}
+			where id = #{postId} and category_id = #{categoryId}
 		]]>
 	</select>
 </mapper>
